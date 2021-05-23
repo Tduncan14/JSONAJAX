@@ -15,6 +15,8 @@
     Ajax information Api Application
 </h1>
 
+<input type="text" name="searchTerm" value="Javascript"/>
+
 <input type="button" id="search" value="search">
 
     <div id="output"></div>
@@ -37,7 +39,9 @@
     function showResults(){
 
         console.log('click')
-        var url="https://randomuser.me/api"
+        // var url="https://randomuser.me/api/"
+
+        var url=`https://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search=javascript`
 
 
         ajaxJS(url,function(response){
@@ -56,8 +60,16 @@
 
      xhr.onreadystatechange = function(){
 
-         console.log(xhr)
-         callback("readychange")
+        if(xhr.readyState == 4 && xhr.status == 200) {
+
+           callback(JSON.parse(xhr.responseText))
+
+        }
+
+        //  console.log(xhr)
+        //  callback("readychange")
+
+        console.log(callback)
      }
       xhr.open('GET',url,true)
       xhr.send();
