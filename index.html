@@ -23,7 +23,58 @@
 
     <script>
 
-        
+     window.onload = function(){
+
+         document.getElementById('search').addEventListener(
+             'click',showResults
+         )
+
+
+
+     }
+
+
+    function showResults(){
+
+        console.log('click')
+        var url="https://randomuser.me/api"
+
+
+        ajaxJS(url,function(response){
+
+            console.log(response)
+        })
+    }
+
+
+
+    function ajaxJS(url,callback){
+
+
+      var xhr = new XMLHttpRequest();
+
+
+     xhr.onreadystatechange = function(){
+
+         console.log(xhr)
+         callback("readychange")
+     }
+      xhr.open('GET',url,true)
+      xhr.send();
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
 
 
 
