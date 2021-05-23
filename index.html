@@ -15,7 +15,7 @@
     Ajax information Api Application
 </h1>
 
-<input type="text" name="searchTerm" value="Javascript"/>
+<input type="text" id="word" name="searchTerm" value="Javascript"/>
 
 <input type="button" id="search" value="search">
 
@@ -38,10 +38,12 @@
 
     function showResults(){
 
+        var searchTerm = document.getElementById('word')
+
         console.log('click')
         // var url="https://randomuser.me/api/"
 
-        var url=`https://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search=javascript`
+        var url=`https://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search=${searchTerm}`
 
 
         ajaxJS(url,function(response){
