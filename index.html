@@ -8,6 +8,26 @@
 
     <style>
 
+        .dataOutput{
+            padding:10px;
+            border:1px solid #eee;
+        }
+
+        .panel{
+            width:25%;
+            display:inline-block;
+            height:120px;
+            margin-right:3px;
+            
+
+        }
+
+
+        .panel img {
+            width:100%;
+            height:100%;
+        }
+
     </style>
 </head>
 <body>
@@ -17,14 +37,20 @@
 
 <input type="text" id="word" name="searchTerm" value="Javascript"/>
 
-<input type="button" id="search" value="search">
+<input type="button" id="search" value="search"/>
 
     <div id="output"></div>
+
+
+    <div id="outputYoutube"> </div>
+
 
 
 
     <script>
 
+ 
+    
      window.onload = function(){
 
          document.getElementById('search').addEventListener(
@@ -38,15 +64,21 @@
 
     function showResults(){
 
-        var searchTerm = document.getElementById('word').value
+        
+        var output = document.querySelector('#output')
 
+        var outputYoutube = document.querySelector('#output');
+
+
+
+        var searchTerm = document.getElementById('word').value 
+
+        output.innerHTML = `<h2> Search Term ${searchTerm}  </h2>`
     
         // var url="https://randomuser.me/api/"
 
-        var url=`https://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search=${searchTerm}`
+        var url=`https://en.wikipedia.org/w/api.php?format=json&action=opensearch&origin=*&search=${searchTerm}`
 
-
-        var output = document.querySelector('#output')
 
         ajaxJS(url,function(response){
 
@@ -56,8 +88,40 @@
                 var holder = typeof response[x] == 'string' ? response[x] : response[x][0];
 
                 console.log(response[x][0])
+
+
+                output.innerHTML += `<div class="dataOutput"> ${holder} </div>`
             }
         })
+
+        var url1 = `https://www.googleapis.com/youtube/v3/search/?part=snippet&key=-76rgM&q=${searchTerm}&maxResults=5`
+
+
+         ajaxJS(url1,function(data){
+             console.log(data.items)
+
+
+             for( var x in data.items){
+                 console.log(data.items[x])
+
+                 var title = data.items[x].snippet.title
+                 var description = data.items[x].snippet.description;
+                 var thumbnail = data.items[x].snippet.thumbnails.default.url ;     
+                 var videoID = data.items[x].id.videoId;  
+                 
+                outputYoutube.innerHTML += `<div class="panel"> <a href="https://youtu.be/"${videoID}target="_blank">  
+                    ${title} <hr/> <br>   <img src=${thumbnail} alt="youtube images"> </a> <br>
+                
+                    <div>`;
+             }
+
+         
+         })
+
+    
+
+       // https://www.googleapis.com/youtube/v3/search/?part=snippet&key==test&maxResults=10
+
     }
 
 
