@@ -38,17 +38,25 @@
 
     function showResults(){
 
-        var searchTerm = document.getElementById('word')
+        var searchTerm = document.getElementById('word').value
 
-        console.log('click')
+    
         // var url="https://randomuser.me/api/"
 
         var url=`https://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search=${searchTerm}`
 
 
+        var output = document.querySelector('#output')
+
         ajaxJS(url,function(response){
 
-            console.log(response)
+
+            for(var x in response){
+                
+                var holder = typeof response[x] == 'string' ? response[x] : response[x][0];
+
+                console.log(response[x][0])
+            }
         })
     }
 
@@ -71,7 +79,9 @@
         //  console.log(xhr)
         //  callback("readychange")
 
-        console.log(callback)
+  
+
+
      }
       xhr.open('GET',url,true)
       xhr.send();
